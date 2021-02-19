@@ -9,6 +9,11 @@ import SignUp from './components/SignUp/SignUp'
 import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
+import PictureCreate from './components/Pictures/PictureCreate'
+import PictureEdit from './components/Pictures/PictureEdit'
+import PictureIndex from './components/Pictures/PictureIndex'
+import PictureIndexAll from './components/Pictures/PictureIndexAll'
+import PictureShow from './components/Pictures/PictureShow'
 
 class App extends Component {
   constructor (props) {
@@ -53,17 +58,32 @@ class App extends Component {
           />
         ))}
         <main className="container">
-          <Route path='/sign-up' render={() => (
+          <Route path='/sign-up/' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
-          <Route path='/sign-in' render={() => (
+          <Route path='/sign-in/' render={() => (
             <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
+          <AuthenticatedRoute user={user} path='/sign-out/' render={() => (
             <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
+          <AuthenticatedRoute user={user} path='/change-password/' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/create-picture/' render={() => (
+            <PictureCreate msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/edit-picture/:id' render={() => (
+            <PictureEdit msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/my-pictures/' render={() => (
+            <PictureIndex msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route user={user} exact path='/' render={() => (
+            <PictureIndexAll msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/my-pictures/:id' render={() => (
+            <PictureShow msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
       </Fragment>

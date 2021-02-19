@@ -10,7 +10,7 @@ export const pictureIndexAll = () => {
 
 export const pictureIndex = user => {
   return axios({
-    url: apiUrl +'/pictures/',
+    url: apiUrl + '/pictures/',
     method: 'GET',
     headers: {
       'Authorization': `Token ${user.token}`
