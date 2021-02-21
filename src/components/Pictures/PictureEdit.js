@@ -39,7 +39,6 @@ class EditPicture extends Component {
     })
       .then(() => {
         this.setState({ edited: true })
-        console.log(this.state)
       })
       .catch(console.error)
   }
@@ -56,7 +55,6 @@ class EditPicture extends Component {
   }
 
   render () {
-    console.log(this.state)
     if (this.state.edited) {
       return <Redirect to={`/pictures/${this.props.match.params.id}`}/>
     }
