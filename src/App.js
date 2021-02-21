@@ -82,7 +82,7 @@ class App extends Component {
           <Route user={user} exact path='/' render={() => (
             <PictureIndexAll msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/my-pictures/:id' render={() => (
+          <AuthenticatedRoute user={user} path='/pictures/:id' render={() => (
             <PictureShow msgAlert={this.msgAlert} user={user} />
           )} />
         </main>

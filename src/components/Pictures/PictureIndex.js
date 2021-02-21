@@ -40,7 +40,7 @@ class PictureIndex extends Component {
     const { pictures } = this.state
     console.log(pictures)
     // if we haven't fetched any pictures yet from the API
-    if (!pictures) {
+    if (!pictures || pictures.length === 0) {
       // A Spinner is just a nice loading message we get from react bootstrap
       return (
         <div>
@@ -50,7 +50,7 @@ class PictureIndex extends Component {
     }
 
     const picturesJsx = pictures.map(picture => (
-      <Link to={`/my-pictures/${picture.id}`} key={picture.id}>
+      <Link to={`/pictures/${picture.id}`} key={picture.id}>
         <li>
           {picture.picture}
         </li>

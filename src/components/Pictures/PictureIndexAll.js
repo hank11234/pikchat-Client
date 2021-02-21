@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { pictureIndexAll } from '../../api/pictures'
+import './PictureIndexAll.scss'
 
 class PictureIndexAll extends Component {
   constructor (props) {
@@ -24,11 +26,6 @@ class PictureIndexAll extends Component {
       })
       // dummy data until we create actual movies
       // .then(res => this.setState({ movies: [{ id: 1, title: 'jaws' }, { id: 2, title: 'The Phantom Menace' }] }))
-      .then(() => msgAlert({
-        heading: 'Loaded pictures successfully',
-        message: 'All pictures retrieved.',
-        variant: 'success'
-      }))
       .catch(error => {
         msgAlert({
           heading: 'Failed to load pictures!',
@@ -52,11 +49,20 @@ class PictureIndexAll extends Component {
       )
     }
 
-    const picturesJsx = pictures.map(picture => (
-      <li key={picture.id}>
-        {picture.picture}
-      </li>
-    ))
+    let picturesJsx
+    if (this.props.user === null) {
+      picturesJsx = pictures.map(picture => (
+        <Link to={'/sign-in/'} key={picture.id} >
+          <img src={picture.picture} className='indexAllPictures'/>
+        </Link>
+      ))
+    } else {
+      picturesJsx = pictures.map(picture => (
+        <Link to={`/pictures/${picture.id}`} key={picture.id} >
+          <img src={picture.picture} className='indexAllPictures'/>
+        </Link>
+      ))
+    }
 
     return (
       <div>

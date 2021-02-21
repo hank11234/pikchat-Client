@@ -39,7 +39,7 @@ class PictureShow extends Component {
       url: `${apiUrl}/pictures/${match.params.id}`,
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Token ${user.token}`
       }
     })
       .then(() => {
@@ -53,7 +53,7 @@ class PictureShow extends Component {
     // const { msgAlert, user } = this.props
     const { picture, deleted } = this.state
     if (deleted) {
-      return <Redirect to="/pictures/"/>
+      return <Redirect to="/"/>
     }
     if (!picture) {
       return (
@@ -62,16 +62,25 @@ class PictureShow extends Component {
         </div>
       )
     }
-
-    return (
-      <div>
-        <h3>{picture.title}</h3>
-        <img src={picture.picture} />
-        <h3>{picture.description}</h3>
-        <button onClick={this.deletePicture}>Delete Picture</button> <button><Link to={`/edit-picture/${picture.id}`}>Edit Picture</Link></button>
-        {deleted ? <Redirect to="/pictures/"/> : pictureJsx}
-      </div>
-    )
+    if (picture.owner === this.props.user.id) {
+      return (
+        <div>
+          <h3>{picture.title}</h3>
+          <img src={picture.picture} />
+          <h5>{picture.description}</h5>
+          <button onClick={this.deletePicture}>Delete Picture</button> <button><Link to={`/edit-picture/${picture.id}`}>Edit Picture</Link></button>
+          {deleted ? <Redirect to="/"/> : pictureJsx}
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h3>{picture.title}</h3>
+          <img src={picture.picture} />
+          <h5>{picture.description}</h5>
+        </div>
+      )
+    }
   }
 }
 

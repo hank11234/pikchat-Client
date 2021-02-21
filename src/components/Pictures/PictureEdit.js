@@ -31,15 +31,15 @@ class EditPicture extends Component {
     const { user, match } = this.props
     axios({
       method: 'PATCH',
-      url: `${apiUrl}/pictures/${match.params.id}`,
+      url: `${apiUrl}/pictures/${match.params.id}/`,
       headers: {
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Token ${user.token}`
       },
       data: { picture: this.state.picture }
     })
       .then(() => {
-        console.log(this.state)
         this.setState({ edited: true })
+        console.log(this.state)
       })
       .catch(console.error)
   }
@@ -56,8 +56,9 @@ class EditPicture extends Component {
   }
 
   render () {
+    console.log(this.state)
     if (this.state.edited) {
-      return <Redirect to={`{/pictures/${this.props.match.params.id}}`}/>
+      return <Redirect to={`/pictures/${this.props.match.params.id}`}/>
     }
     return (
       <main>
