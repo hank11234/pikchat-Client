@@ -1,0 +1,85 @@
+import React, { Component } from 'react'
+import CommentForm from './CommentForm'
+import { Redirect } from 'react-router-dom'
+import { commentCreate } from '../../api/comments'
+
+class CommentCreate extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      comment: {
+        comment: ''
+      },
+      createdId: null,
+      deleted: false
+    }
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    const { user, msgAlert } = this.props
+    const { comment } = this.state
+    // create a movie, pass it the movie data and the user for its token
+    commentCreate(comment, user)
+      // set the createdId to the id of the movie we just created
+      // .then(res => this.setState({ createdId: res.data.movie.id }))
+      .then(res => {
+        this.setState({ createdId: res.data.comment.id })
+        console.log(this.state)
+        console.log(res)
+        // pass the response to the next .then so we can show the title
+        return res
+      })
+      .then(res => msgAlert({
+        heading: 'Added new comment successfully',
+        message: 'Comment has been added successfully. Now viewing comments.',
+        variant: 'success'
+      }))
+      .catch(error => {
+        msgAlert({
+          heading: 'Failed to add comment',
+          message: 'Could not add comment with error: ' + error.message,
+          variant: 'danger'
+        })
+      })
+  }
+
+  handleChange = event => {
+    // in react, an event is actually a SyntheticEvent
+    // to ensure the properties are not set to null after handleChange is finished
+    // we must call event.persist
+    event.persist()
+    this.setState(state => {
+      // return our state changge
+      return {
+        // set the movie state, to what it used to be (...state.movie)
+        // but replace the property with `name` to its current `value`
+        // ex. name could be `title` or `director`
+        comment: { ...state.comment, [event.target.name]: event.target.value }
+      }
+    })
+  }
+
+  render () {
+    // destructure our movie and createdId state
+    const { comment, createdId } = this.state
+    // if the movie has been created and we set its id
+    if (createdId) {
+      // redirect to the movies show page
+      return <Redirect to={`/pictures/${comment.picture_id}`} />
+    }
+    return (
+      <div>
+        <h5>Add Comment</h5>
+        <CommentForm
+          comment={comment}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+      </div>
+    )
+  }
+}
+
+export default CommentCreate

@@ -18,7 +18,9 @@ class PictureShow extends Component {
     const { user, match, msgAlert } = this.props
     console.log(this.props)
     pictureShow(match.params.id, user)
-      .then(res => this.setState({ picture: res.data }))
+      .then(res => {
+        this.setState({ picture: res.data })
+      })
       .then(() => msgAlert({
         heading: 'Showing picture successfully',
         message: 'The picture is now displayed.',

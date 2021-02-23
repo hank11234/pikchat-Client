@@ -3,15 +3,13 @@ import { Redirect, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 
-class EditPicture extends Component {
+class EditComment extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      picture: {
-        title: '',
-        picture: '',
-        description: ''
+      comment: {
+        comment: ''
       },
       edited: false
     }
@@ -19,8 +17,8 @@ class EditPicture extends Component {
 
   async componentDidMount () {
     try {
-      const res = await axios(`${apiUrl}/pictures/${this.props.match.params.id}`)
-      this.setState({ picture: res.data.picture })
+      const res = await axios(`${apiUrl}/comments/${this.props.match.params.id}`)
+      this.setState({ comment: res.data.comment })
     } catch (err) {
       console.error(err)
     }
@@ -31,11 +29,11 @@ class EditPicture extends Component {
     const { user, match } = this.props
     axios({
       method: 'PATCH',
-      url: `${apiUrl}/pictures/${match.params.id}/`,
+      url: `${apiUrl}/comments/${match.params.id}/`,
       headers: {
         'Authorization': `Token ${user.token}`
       },
-      data: { picture: this.state.picture }
+      data: { comment: this.state.comment }
     })
       .then(() => {
         this.setState({ edited: true })
@@ -49,38 +47,24 @@ class EditPicture extends Component {
       const editedField = {
         [event.target.name]: event.target.value
       }
-      const newPicture = { ...currState.picture, ...editedField }
-      return { picture: newPicture }
+      const newComment = { ...currState.comment, ...editedField }
+      return { comment: newComment }
     })
   }
 
   render () {
     if (this.state.edited) {
-      return <Redirect to={`/pictures/${this.props.match.params.id}`}/>
+      return <Redirect to={`/pictures/${this.state.comment.picture_id}`}/>
     }
     return (
       <main>
-        <h2>Edit Picture</h2>
+        <h2>Edit Comment</h2>
         <form onSubmit={this.handleSubmit}>
           <input
-            name="title"
+            name="comment"
             type="text"
-            placeholder="Enter new Title"
-            value={this.state.picture.title}
-            onChange={this.handleInputChange}
-          />
-          <input
-            name="picture"
-            type="text"
-            placeholder="Enter new Picture URL"
-            value={this.state.picture.picture}
-            onChange={this.handleInputChange}
-          />
-          <input
-            name="description"
-            type="text"
-            placeholder="Enter new Description"
-            value={this.state.picture.description}
+            placeholder="Enter new Comment"
+            value={this.state.comment.comment}
             onChange={this.handleInputChange}
           />
           <button type="submit">Submit</button>
@@ -90,4 +74,4 @@ class EditPicture extends Component {
   }
 }
 
-export default withRouter(EditPicture)
+export default withRouter(EditComment)

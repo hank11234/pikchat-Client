@@ -14,6 +14,8 @@ import PictureEdit from './components/Pictures/PictureEdit'
 import PictureIndex from './components/Pictures/PictureIndex'
 import PictureIndexAll from './components/Pictures/PictureIndexAll'
 import PictureShow from './components/Pictures/PictureShow'
+import CommentIndex from './components/Comments/CommentIndex'
+import CommentCreate from './components/Comments/CommentCreate'
 
 class App extends Component {
   constructor (props) {
@@ -84,6 +86,12 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/pictures/:id' render={() => (
             <PictureShow msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route user={user} path='/pictures/:id' render={({ match }) => (
+            <CommentIndex msgAlert={this.msgAlert} user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} path='/pictures/:id' render={() => (
+            <CommentCreate msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
       </Fragment>

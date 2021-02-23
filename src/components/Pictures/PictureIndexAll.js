@@ -16,14 +16,10 @@ class PictureIndexAll extends Component {
   // after we render the MovieIndex component for the first time
   componentDidMount () {
     const { msgAlert } = this.props
-    console.log(this.props)
     // make a request to get all of our movies
     pictureIndexAll()
       // set the movies state, to the movies we got back in the response's data
-      .then(res => {
-        console.log(res)
-        this.setState({ pictures: res.data.pictures })
-      })
+      .then(res => this.setState({ pictures: res.data.pictures }))
       // dummy data until we create actual movies
       // .then(res => this.setState({ movies: [{ id: 1, title: 'jaws' }, { id: 2, title: 'The Phantom Menace' }] }))
       .catch(error => {
@@ -38,7 +34,6 @@ class PictureIndexAll extends Component {
   render () {
     // destructure our movies state
     const { pictures } = this.state
-    console.log(pictures)
     // if we haven't fetched any movies yet from the API
     if (!pictures) {
       // A Spinner is just a nice loading message we get from react bootstrap
@@ -51,15 +46,17 @@ class PictureIndexAll extends Component {
 
     let picturesJsx
     if (this.props.user === null) {
-      picturesJsx = pictures.map(picture => (
+      picturesJsx = pictures.reverse().map(picture => (
         <Link to={'/sign-in/'} key={picture.id} >
           <img src={picture.picture} className='indexAllPictures'/>
+          <p>Submitted by: {picture.owner}</p>
         </Link>
       ))
     } else {
-      picturesJsx = pictures.map(picture => (
+      picturesJsx = pictures.reverse().map(picture => (
         <Link to={`/pictures/${picture.id}`} key={picture.id} >
           <img src={picture.picture} className='indexAllPictures'/>
+          <p>Submitted by: {picture.owner}</p>
         </Link>
       ))
     }

@@ -52,7 +52,7 @@ class PictureIndex extends Component {
     const picturesJsx = pictures.map(picture => (
       <Link to={`/pictures/${picture.id}`} key={picture.id}>
         <li>
-          {picture.picture}
+          {picture.title}
         </li>
       </Link>
     ))
