@@ -9,9 +9,9 @@ class EditPicture extends Component {
 
     this.state = {
       picture: {
-        title: '',
-        picture: '',
-        description: ''
+        title: this.props.location.state.title,
+        picture: this.props.location.state.picture,
+        description: this.props.location.state.description
       },
       edited: false
     }

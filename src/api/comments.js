@@ -8,13 +8,16 @@ export const commentIndex = () => {
   })
 }
 
-export const commentCreate = (comment, user) => {
+export const commentCreate = (comment, user, pictureId) => {
   return axios({
     url: apiUrl + '/comments/',
     method: 'POST',
     headers: {
       'Authorization': `Token ${user.token}`
     },
-    data: { comment }
+    data: {
+      comment: comment,
+      pictureId: pictureId
+    }
   })
 }

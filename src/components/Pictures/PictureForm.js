@@ -20,7 +20,9 @@ const PictureForm = ({ picture, handleSubmit, handleChange }) => (
       onChange={handleChange}
     />
     <label>Description</label>
-    <input
+    <textarea
+      rows="8"
+      cols="60"
       placeholdder='Enter picture description (optional)'
       // this name should line up with the state we want to change
       name='description'

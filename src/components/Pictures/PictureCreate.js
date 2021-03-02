@@ -65,7 +65,6 @@ class PictureCreate extends Component {
   render () {
     // destructure our movie and createdId state
     const { picture, createdId } = this.state
-    console.log(picture)
     // if the movie has been created and we set its id
     if (createdId) {
       // redirect to the movies show page

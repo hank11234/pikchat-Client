@@ -62,7 +62,7 @@ class PictureIndexAll extends Component {
     }
 
     return (
-      <div>
+      <div className='pictureContainer'>
         <h3>Pictures</h3>
         <ul>
           {picturesJsx}

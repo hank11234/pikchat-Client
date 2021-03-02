@@ -70,7 +70,14 @@ class PictureShow extends Component {
           <h3>{picture.title}</h3>
           <img src={picture.picture} />
           <h5>{picture.description}</h5>
-          <button onClick={this.deletePicture}>Delete Picture</button> <button><Link to={`/edit-picture/${picture.id}`}>Edit Picture</Link></button>
+          <button onClick={this.deletePicture}>Delete Picture</button> <button><Link to={{
+            pathname: `/edit-picture/${picture.id}`,
+            state: {
+              title: picture.title,
+              picture: picture.picture,
+              description: picture.description
+            }
+          }}>Edit Picture</Link></button>
           {deleted ? <Redirect to="/"/> : pictureJsx}
         </div>
       )

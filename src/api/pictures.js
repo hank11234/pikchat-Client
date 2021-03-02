@@ -31,7 +31,7 @@ export const pictureCreate = (picture, user) => {
 
 export const pictureShow = (id) => {
   return axios({
-    url: apiUrl + '/pictures/' + id,
+    url: apiUrl + '/pictures/' + id + '/',
     method: 'GET'
   })
 }

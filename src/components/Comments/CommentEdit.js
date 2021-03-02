@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
+import './Comments.scss'
 
 class EditComment extends Component {
   constructor (props) {
@@ -9,7 +10,7 @@ class EditComment extends Component {
 
     this.state = {
       comment: {
-        comment: ''
+        comment: this.props.location.state.comment
       },
       edited: false
     }
@@ -17,7 +18,10 @@ class EditComment extends Component {
 
   async componentDidMount () {
     try {
+      console.log(this.props)
+      console.log(this.state)
       const res = await axios(`${apiUrl}/comments/${this.props.match.params.id}`)
+      console.log(res)
       this.setState({ comment: res.data.comment })
     } catch (err) {
       console.error(err)
@@ -26,7 +30,7 @@ class EditComment extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    const { user, match } = this.props
+    const { user, match, msgAlert } = this.props
     axios({
       method: 'PATCH',
       url: `${apiUrl}/comments/${match.params.id}/`,
@@ -38,6 +42,11 @@ class EditComment extends Component {
       .then(() => {
         this.setState({ edited: true })
       })
+      .then(() => msgAlert({
+        heading: 'Comment Edited Successfully',
+        message: 'Now viewing pictures.',
+        variant: 'success'
+      }))
       .catch(console.error)
   }
 
@@ -54,20 +63,22 @@ class EditComment extends Component {
 
   render () {
     if (this.state.edited) {
-      return <Redirect to={`/pictures/${this.state.comment.picture_id}`}/>
+      console.log(this.state)
+      return <Redirect to={'/'}/>
     }
     return (
       <main>
         <h2>Edit Comment</h2>
         <form onSubmit={this.handleSubmit}>
-          <input
+          <textarea
             name="comment"
-            type="text"
-            placeholder="Enter new Comment"
+            rows="8"
+            cols="60"
+            placeholder='Enter new Comment'
             value={this.state.comment.comment}
             onChange={this.handleInputChange}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" className='commentSubmit'>Submit</button>
         </form>
       </main>
     )

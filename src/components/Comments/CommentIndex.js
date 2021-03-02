@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { commentIndex } from '../../api/comments'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
@@ -10,7 +10,8 @@ class CommentIndex extends Component {
     // keep track of the pictures in our application
     // initially they will be null until we have fetched them from the api
     this.state = {
-      comments: []
+      comments: [],
+      deleted: false
     }
   }
 
@@ -32,20 +33,37 @@ class CommentIndex extends Component {
       })
   }
 
-  deleteComment = () => {
-    const { user, match } = this.props
-    console.log(this.props)
+  deleteSuccess = () => {
+    const { user } = this.props
+    commentIndex(user)
+      .then(res => this.setState({ comments: res.data.comments }))
+    console.log('this worked')
+  }
+
+  deleteComment = (event) => {
+    const { user, msgAlert } = this.props
+    const commentId = event.target.id
     axios({
-      url: `${apiUrl}/comments/${match.params.id}`,
+      url: `${apiUrl}/comments/${commentId}`,
       method: 'DELETE',
       headers: {
         'Authorization': `Token ${user.token}`
       }
     })
       .then(() => {
-        commentIndex(user)
+        this.deleteSuccess()
       })
-      .catch(console.error)
+      .then(() => msgAlert({
+        heading: 'Comment deleted successfully',
+        variant: 'success'
+      }))
+      .catch(error => {
+        msgAlert({
+          heading: 'Failed to delete comment!',
+          message: 'Could not delete comment with error: ' + error.message,
+          variant: 'danger'
+        })
+      })
   }
 
   render () {
@@ -64,13 +82,18 @@ class CommentIndex extends Component {
     }
 
     const commentsJsx = comments.map(comment => {
-      if (comment.picture_id.toString() === match.params.id) {
+      if (comment.pictureId.toString() === match.params.id) {
         if (comment.owner === this.props.user.id) {
           return (
             <div key={comment.id}>
               <p>{comment.comment}</p>
-              <button onClick={this.deleteComment}>Delete Comment</button> <button><Link to={`/edit-comment/${comment.id}`}>Edit Comment</Link></button>
-              {comment.deleted ? <Redirect to={`/picture/${this.state.comment.picture_id}`}/> : commentsJsx}
+              <button onClick={this.deleteComment} id={comment.id}>Delete Comment</button> <button><Link to={{
+                pathname: `/edit-comment/${comment.id}`,
+                state: {
+                  comment: comment.comment
+                }
+              }}>Edit Comment</Link></button>
+              {comment.deleted ? this.deleteSuccess() : commentsJsx}
             </div>
           )
         } else {

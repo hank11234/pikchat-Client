@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CommentForm from './CommentForm'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import { commentCreate } from '../../api/comments'
 
 class CommentCreate extends Component {
@@ -9,7 +9,8 @@ class CommentCreate extends Component {
 
     this.state = {
       comment: {
-        comment: ''
+        comment: '',
+        pictureId: parseInt(this.props.match.params.id)
       },
       createdId: null,
       deleted: false
@@ -19,13 +20,15 @@ class CommentCreate extends Component {
   handleSubmit = event => {
     event.preventDefault()
     const { user, msgAlert } = this.props
-    const { comment } = this.state
+    const { comment, pictureId } = this.state
+    console.log(this.state)
     // create a movie, pass it the movie data and the user for its token
-    commentCreate(comment, user)
+    commentCreate(comment, user, pictureId)
       // set the createdId to the id of the movie we just created
       // .then(res => this.setState({ createdId: res.data.movie.id }))
       .then(res => {
         this.setState({ createdId: res.data.comment.id })
+        // this.setState({ pictureId: match.params.id })
         console.log(this.state)
         console.log(res)
         // pass the response to the next .then so we can show the title
@@ -67,18 +70,23 @@ class CommentCreate extends Component {
     // if the movie has been created and we set its id
     if (createdId) {
       // redirect to the movies show page
-      return <Redirect to={`/pictures/${comment.picture_id}`} />
+      return (
+        <div>
+          <h5>Comment: {comment.comment} <br/> Added!</h5>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h5>Add Comment</h5>
+          <CommentForm
+            comment={comment}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
+      )
     }
-    return (
-      <div>
-        <h5>Add Comment</h5>
-        <CommentForm
-          comment={comment}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
-      </div>
-    )
   }
 }
 
