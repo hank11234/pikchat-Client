@@ -21,11 +21,6 @@ class PictureIndex extends Component {
       .then(res => this.setState({ pictures: res.data.pictures }))
       // dummy data until we create actual pictures
       // .then(res => this.setState({ pictures: [{ id: 1, title: 'jaws' }, { id: 2, title: 'The Phantom Menace' }] }))
-      .then(() => msgAlert({
-        heading: 'Loaded your pictures successfully',
-        message: 'All pictures retrieved. Click on one to go to its page.',
-        variant: 'success'
-      }))
       .catch(error => {
         msgAlert({
           heading: 'Failed to load your pictures!',
@@ -58,8 +53,8 @@ class PictureIndex extends Component {
     ))
 
     return (
-      <div>
-        <h3>Pictures</h3>
+      <div className='col-4 mx-auto mt-1'>
+        <h3 className='text-center'>My Pictures</h3>
         <ul>
           {picturesJsx}
         </ul>
