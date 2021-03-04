@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Card } from 'react-bootstrap'
+// import { Link } from 'react-router-dom'
 import { pictureIndexAll } from '../../api/pictures'
-import './PictureIndexAll.scss'
+import '../../index.scss'
 
 class PictureIndexAll extends Component {
   constructor (props) {
@@ -46,27 +47,41 @@ class PictureIndexAll extends Component {
 
     let picturesJsx
     if (this.props.user === null) {
-      picturesJsx = pictures.reverse().map(picture => (
-        <Link to={'/sign-in/'} key={picture.id} >
-          <img src={picture.picture} className='indexAllPictures'/>
-          <p>Submitted by: {picture.owner}</p>
-        </Link>
+      picturesJsx = pictures.map(picture => (
+        <Card key={picture.id} className='col-3 ' style={{ margin: '5px', display: 'inline-flex', backgroundColor: '#dbdbdb' }}>
+          <Card.Link href={'#sign-in/'}>
+            <Card.Body>
+              <div>
+                <Card.Img src={picture.picture}/>
+              </div>
+              <Card.Title style={{ color: '#000000' }}>{picture.title}</Card.Title>
+              <Card.Text style={{ color: '#000000' }}>Submitted by: {picture.owner}</Card.Text>
+            </Card.Body>
+          </Card.Link>
+        </Card>
       ))
     } else {
-      picturesJsx = pictures.reverse().map(picture => (
-        <Link to={`/pictures/${picture.id}`} key={picture.id} >
-          <img src={picture.picture} className='indexAllPictures'/>
-          <p>Submitted by: {picture.owner}</p>
-        </Link>
+      picturesJsx = pictures.map(picture => (
+        <Card key={picture.id} className='col-3 index-card' style={{ margin: '5px', display: 'inline-flex', backgroundColor: '#dbdbdb' }}>
+          <Card.Link href={`#pictures/${picture.id}`}>
+            <Card.Body>
+              <div>
+                <Card.Img src={picture.picture}/>
+              </div>
+              <Card.Title style={{ color: '#000000' }}>{picture.title}</Card.Title>
+              <Card.Text style={{ color: '#000000' }}>Submitted by: {picture.owner}</Card.Text>
+            </Card.Body>
+          </Card.Link>
+        </Card>
       ))
     }
 
     return (
-      <div className='pictureContainer'>
-        <h3>Pictures</h3>
-        <ul>
-          {picturesJsx}
-        </ul>
+      <div className='container-fluid pictureContainer'>
+        <div className='mt-1'>
+          <h3 className='text-center'>Pictures</h3>
+          <div className='row' style={{ justifyContent: 'center' }}>{picturesJsx.reverse()}</div>
+        </div>
       </div>
     )
   }

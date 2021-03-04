@@ -71,13 +71,15 @@ class PictureCreate extends Component {
       return <Redirect to={`/pictures/${createdId}`} />
     }
     return (
-      <div>
-        <h3>Add Picture</h3>
-        <PictureForm
-          picture={picture}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
+      <div className='row'>
+        <div className='col-4 mx-auto mt-5'>
+          <h3>Add Picture</h3>
+          <PictureForm
+            picture={picture}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
       </div>
     )
   }
