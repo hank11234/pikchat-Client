@@ -46,7 +46,7 @@ class PictureIndex extends Component {
 
     const picturesJsx = pictures.map(picture => (
       <Link to={`/pictures/${picture.id}`} key={picture.id}>
-        <li>
+        <li style={{ color: '#000000' }}>
           {picture.title}
         </li>
       </Link>
