@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CommentForm from './CommentForm'
 // import { Redirect } from 'react-router-dom'
 import { commentCreate } from '../../api/comments'
+import Card from 'react-bootstrap/Card'
 
 class CommentCreate extends Component {
   constructor (props) {
@@ -77,14 +78,14 @@ class CommentCreate extends Component {
       )
     } else {
       return (
-        <div>
-          <h5>Add Comment</h5>
+        <Card style={{ display: 'inline-flex', padding: '30px 30px 0 30px', marginLeft: '5px', marginBottom: '5px' }}>
+          <Card.Title style={{ paddingLeft: '6px' }}>Add Comment</Card.Title>
           <CommentForm
             comment={comment}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
           />
-        </div>
+        </Card>
       )
     }
   }

@@ -1,8 +1,10 @@
 import React from 'react'
 import './Comments.scss'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 const CommentForm = ({ comment, handleSubmit, handleChange }) => (
-  <form onSubmit={handleSubmit}>
+  <Form onSubmit={handleSubmit}>
     <textarea
       placeholder='Comment'
       rows="8"
@@ -12,8 +14,8 @@ const CommentForm = ({ comment, handleSubmit, handleChange }) => (
       value={comment.comment}
       onChange={handleChange}
     />
-    <button type='submit' className='commentSubmit'>Submit</button>
-  </form>
+    <Button type='submit' className='commentSubmit' style={{ marginLeft: '10px', marginBottom: '30px' }}>Submit</Button>
+  </Form>
 )
 
 export default CommentForm

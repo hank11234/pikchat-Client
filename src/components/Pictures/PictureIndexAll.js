@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card } from 'react-bootstrap'
+import Card from 'react-bootstrap/Card'
 // import { Link } from 'react-router-dom'
 import { pictureIndexAll } from '../../api/pictures'
 import '../../index.scss'

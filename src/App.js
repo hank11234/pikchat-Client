@@ -60,7 +60,7 @@ class App extends Component {
             deleteAlert={this.deleteAlert}
           />
         ))}
-        <main className="container-fluid">
+        <main className="container-fluid" style={{ padding: 0 }}>
           <Route path='/sign-up/' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />

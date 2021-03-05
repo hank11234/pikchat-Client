@@ -3,6 +3,7 @@ import { withRouter, Redirect, Link } from 'react-router-dom'
 import { pictureShow } from '../../api/pictures'
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
+import Button from 'react-bootstrap/Button'
 
 class PictureShow extends Component {
   constructor (props) {
@@ -66,26 +67,26 @@ class PictureShow extends Component {
     }
     if (picture.owner === this.props.user.id) {
       return (
-        <div>
-          <h3>{picture.title}</h3>
-          <img src={picture.picture} />
-          <h5>{picture.description}</h5>
-          <button onClick={this.deletePicture}>Delete Picture</button> <button><Link to={{
+        <div style={{ backgroundColor: '#dbdbdb', paddingBottom: '10px' }}>
+          <h1 className='text-center'>{picture.title}</h1>
+          <img src={picture.picture} style={{ maxWidth: '100%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}/>
+          <h5 className='text-center'>{picture.description}</h5>
+          <Button onClick={this.deletePicture} style={{ display: 'block', margin: 'auto', marginBottom: '10px' }} variant='dark'>Delete Picture</Button><Button style={{ display: 'block', margin: 'auto' }} variant='dark'><Link to={{
             pathname: `/edit-picture/${picture.id}`,
             state: {
               title: picture.title,
               picture: picture.picture,
               description: picture.description
             }
-          }}>Edit Picture</Link></button>
+          }} style={{ color: '#ffffff' }}>Edit Picture</Link></Button>
           {deleted ? <Redirect to="/"/> : pictureJsx}
         </div>
       )
     } else {
       return (
-        <div>
+        <div style={{ backgroundColor: '#dbdbdb', paddingBottom: '10px' }}>
           <h3>{picture.title}</h3>
-          <img src={picture.picture} />
+          <img src={picture.picture} style={{ maxWidth: '100%' }} />
           <h5>{picture.description}</h5>
         </div>
       )
