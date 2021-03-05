@@ -85,9 +85,9 @@ class PictureShow extends Component {
     } else {
       return (
         <div style={{ backgroundColor: '#dbdbdb', paddingBottom: '10px' }}>
-          <h3>{picture.title}</h3>
-          <img src={picture.picture} style={{ maxWidth: '100%' }} />
-          <h5>{picture.description}</h5>
+          <h1 className='text-center'>{picture.title}</h1>
+          <img src={picture.picture} style={{ maxWidth: '100%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }}/>
+          <h5 className='text-center'>{picture.description}</h5>
         </div>
       )
     }

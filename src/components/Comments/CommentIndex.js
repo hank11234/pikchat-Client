@@ -85,7 +85,7 @@ class CommentIndex extends Component {
       if (comment.pictureId.toString() === match.params.id) {
         if (comment.owner === this.props.user.id) {
           return (
-            <div key={comment.id}>
+            <div key={comment.id} style={{ borderTop: '1px solid #000000', marginRight: '40px' }}>
               <p>{comment.comment}</p>
               <button onClick={this.deleteComment} id={comment.id}>Delete Comment</button> <button><Link to={{
                 pathname: `/edit-comment/${comment.id}`,
@@ -98,7 +98,7 @@ class CommentIndex extends Component {
           )
         } else {
           return (
-            <p>{comment.comment}</p>
+            <p style={{ borderTop: '1px solid #000000', marginRight: '40px' }}>{comment.comment}</p>
           )
         }
       }
@@ -106,7 +106,7 @@ class CommentIndex extends Component {
 
     return (
       <div>
-        <h3>Comments</h3>
+        <h3 style={{ paddingLeft: '40px' }}>Comments</h3>
         <ul>
           {commentsJsx}
         </ul>
