@@ -35,12 +35,19 @@ class PictureIndexAll extends Component {
   render () {
     // destructure our movies state
     const { pictures } = this.state
+    console.log(pictures)
     // if we haven't fetched any movies yet from the API
     if (!pictures) {
-      // A Spinner is just a nice loading message we get from react bootstrap
       return (
         <div>
-          <h2>There are no pictures! Go take some!</h2>
+          <h2>Loading...</h2>
+        </div>
+      )
+    }
+    if (pictures.length === 0) {
+      return (
+        <div>
+          <h2 className='text-center'>There are no pictures. Go take some!</h2>
         </div>
       )
     }
