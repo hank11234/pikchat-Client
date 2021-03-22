@@ -53,6 +53,7 @@ class SignUp extends Component {
       <div className="row">
         <div className="col-4 mx-auto mt-5">
           <h3>Sign Up</h3>
+          <h2>Credentials are not saved, if you would like to use a premade account sign in with Email: test@test.com Password: testing.</h2>
           <Form onSubmit={this.onSignUp}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
